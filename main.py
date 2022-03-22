@@ -6,9 +6,20 @@ from sqlalchemy.orm.session import Session
 import models
 from database import engine, get_db
 from schemas import UserCreateRequest, UserUpdateRequest
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 models.Base.metadata.create_all(bind=engine)
 
